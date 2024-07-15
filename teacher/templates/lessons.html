@@ -1,0 +1,191 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&family=Freeman&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'scripts/tailwind.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                clifford: '#da373d',
+                primary: '#ff7e84',
+                secondary: '#30bead',
+                tertiary: '#ffbc1f',
+                redShade: '#8861db',
+                dark: '#0c1327',
+                fourth: '#dcf2ef',
+                fiveth: '#ffebec',
+                sixth: '#ffffff',
+                seventh: '#e8edf5'
+              },
+              flex: {
+                '30': '1 1 30rem',
+
+              },
+              gridTemplateColumns: {
+                'auto-fit': 'repeat(auto-fit, minmax(250px, 1fr))',
+              },
+              screens: {
+                'max-950': {'max': '950px'},
+                'max-700': {'max': '700px'},
+                'max-585': {'max': '585px'},
+                'max-495': {'max': '495px'},
+                'max-395': {'max': '395px'},
+              },
+              spacing: {
+                '10p': '10%',
+                'low': '68px'
+              },
+              height: {
+                '30': '30%',
+                '40': '40%',
+                '60': '60%',
+                '70': '70%',
+                '90': '90%',
+                '110': '110vh'
+              },
+              width: {
+                '30': '30%',
+                '40': '40%',
+                '60': '60%',
+                '70': '70%',
+                '90': '90%',
+                '110': '110vh'
+              },
+            }
+          }
+        }
+    </script>
+</head>
+<body>
+    <header class="w-full p-2 bg-white fixed z-50 flex items-center justify-center">
+        <nav class="w-full flex items-center justify-between">
+            <a href="{% url 'teacher:topic' %}" class="text-2xl font-bold text-primary transition duration-300 ease-out hover:text-xl">EduMin</a>           
+            <div class="flex items-center gap-4">
+                <img class="w-12 h-12 p-1 rounded-full ring-2 ring-gray-300 object-cover" src="{% static 'img/default-profile.jpg' %}" alt="profile">
+                <div class="text-lg font-bold">
+                    <div>{{teacher.last_name}} {{teacher.first_name}}</div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section class="w-full h-screen bg-seventh pt-low flex items-center justify-between gap-2">
+        <div class="bg-white w-1/6 h-full p-4 flex items-center flex-col gap-8">          
+            <div class="mt-4 w-full flex items-center gap-4">
+                <img class="w-12 h-12 rounded-full object-cover" src="{% static 'img/default-profile.jpg' %}" alt="">
+                <div class="font-bold">
+                    <div>{{teacher.last_name}} {{teacher.first_name}}</div>
+                    <div class="text-sm text-gray-500">Teacher</div>
+                </div>
+            </div>
+            <div class="w-full flex items-center justify-center gap-2 flex-col">
+              <a href="{% url 'teacher:topic' %}" class="rounded-lg w-full p-2 flex items-center gap-4 hover:bg-emerald-50 hover:text-green-800">
+                <div class="fa-solid fa-book text-xl"></div>
+                <span class="text-xl font-semibold">Matieres</span>
+              </a>
+              <a href="{% url 'teacher:lesson' %}" class="rounded-lg w-full p-2 flex items-center gap-4 bg-emerald-50 hover:bg-emerald-50 hover:text-green-800">
+                <div class="fa-solid fa-book-open text-xl text-green-800"></div>
+                <span class="text-xl font-semibold text-green-800">Cours</span>
+              </a>
+              <a href="{% url 'teacher:exercice' %}" class="rounded-lg w-full p-2 flex items-center gap-4 hover:bg-emerald-50 hover:text-green-800">
+                <i class="fa-solid fa-book-open-reader text-xl"></i>
+                <span class="text-xl font-semibold">Exercices</span>
+              </a>
+              <a href="{% url 'teacher:student' %}" class="rounded-lg w-full p-2 flex items-center gap-4 hover:bg-emerald-50 hover:text-green-800">
+                <div class="fa-solid fa-users text-xl"></div>
+                <span class="text-xl font-semibold">Élèves</span>
+              </a>
+              <a href="{% url 'teacher:transaction' %}" class="rounded-lg w-full p-2 flex items-center gap-4 hover:bg-emerald-50 hover:text-green-800">
+                <div class="fa-solid fa-money-bill-transfer text-xl"></div>
+                <span class="text-xl font-semibold">Transaction</span>
+              </a>
+            </div>
+            <div class="border-solid border-t-2 w-full h-16 relative -bottom-60 flex items-center justify-center hover:text-red-400">
+              <a href="{% url 'teacher:logout' %}" class="rounded-lg w-full p-2 flex items-center gap-4">
+                <i class="fa-solid fa-right-from-bracket text-xl"></i>
+                <span class="text-xl font-semibold">Déconnextion</span>
+              </a>
+            </div>
+        </div>
+        <div class="p-4 w-5/6 h-full flex items-center gap-4 flex-col">
+          <h1 class="self-start mt-4 text-5xl text-dark font-bold">Cours</h1>
+          <div class="w-full h-14 p-4 bg-white rounded-lg flex items-center justify-end gap-4">
+            <a href="{% url 'teacher:create-lesson' %}" class="p-2 w-36 rounded bg-green-700 text-white font-semibold">
+              <div class="fa-solid fa-plus"></div>
+              Créer cours
+            </a>
+          </div>
+          
+
+          <div class="relative overflow-x-auto shadow-md w-full rounded-lg">
+            {% if lessons %}
+              <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                  <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                      <tr>
+                          <th scope="col" class="px-6 py-3">
+                              Numéro
+                          </th>
+                          <th scope="col" class="px-6 py-3">
+                            image
+                          </th>
+                          <th scope="col" class="px-6 py-3">
+                              nom matière
+                          </th>
+                          <th scope="col" class="px-6 py-3">
+                            Nom cours
+                          </th>
+                          <th scope="col" class="px-6 py-3">
+                              Action
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {% for lesson in lessons %}
+                      <tr class="odd:bg-white even:bg-gray-50 border-b hover:bg-gray-100">
+                          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                              {{ forloop.counter }}
+                          </th>
+                          <td class="px-6 py-4">
+                            {% if lesson.img_cours %}
+                              <img class="w-10 h-10 rounded object-cover" src="{{ lesson.img_cours.url }}" alt="Current avatar">
+                            {% else %}
+                              <img class="w-10 h-10 rounded object-cover" src="{% static 'img/default-cours.jpg' %}" alt="Default avatar">
+                            {% endif %}
+                          </td>
+                          <td class="px-6 py-4">
+                              {{ lesson.de_matiere.nom_matiere }} 
+                              {{ lesson.de_matiere.level }}
+                          </td>
+                          <td class="px-6 py-4">
+                            {{lesson.nom_cours}}
+                          </td>
+                          <td class="px-6 py-4">
+                              <a href="{% url 'teacher:edit_lesson' lesson.id %}" class="font-medium text-lg mr-2">
+                                <span class="bg-blue-100 text-blue-800 font-semibold me-2 px-5 py-0.5 rounded transition duration-300 ease-in-out hover:bg-blue-200">Edit</span>
+                              </a>
+                              <a href="{% url 'teacher:delete_lesson' lesson.id %}" class="font-medium text-lg mr-2">
+                                <span class="bg-red-100 text-red-800 font-semibold me-2 px-5 py-0.5 rounded transition duration-300 ease-in-out hover:bg-red-200">Delete</span>
+                              </a>
+                          </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+              </table>
+            {% else %}
+              <p class="text-2xl font-bold text-center">Aucun Cours</p>
+            {%endif%}
+          </div>
+        </div>
+    </section>
+</body>
+</html>

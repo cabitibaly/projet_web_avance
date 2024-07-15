@@ -1,0 +1,132 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Email</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&family=Freeman&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'scripts/tailwind.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                clifford: '#da373d',
+                primary: '#ff7e84',
+                secondary: '#30bead',
+                tertiary: '#ffbc1f',
+                redShade: '#8861db',
+                dark: '#0c1327',
+                fourth: '#dcf2ef',
+                fiveth: '#ffebec',
+                sixth: '#ffffff'
+              },
+              flex: {
+                '30': '1 1 30rem',
+
+              },
+              gridTemplateColumns: {
+                'auto-fit': 'repeat(auto-fit, minmax(250px, 1fr))',
+              },
+              screens: {
+                'max-1405': {'max': '1405px'},
+                'max-950': {'max': '950px'},
+                'max-700': {'max': '700px'},
+                'max-585': {'max': '585px'},
+                'max-495': {'max': '495px'},
+                'max-395': {'max': '395px'},
+                'max-360': {'max': '360px'},
+              },
+              spacing: {
+                '10p': '10%',
+              },
+              height: {
+                '30': '30%',
+                '40': '40%',
+                '60': '60%',
+                '70': '70%',
+                '90': '90%',
+                '110': '110vh'
+              },
+              width: {
+                '30': '30%',
+                '40': '40%',
+                '50': '50%',
+                '60': '60%',
+                '70': '70%',
+                '90': '90%',
+                '110': '110vh'
+              },
+            }
+          }
+        }
+    </script>
+</head>
+<body class="w-full h-screen bg-gradient-to-r from-fourth to-fiveth">
+    <nav class="w-full bg-white flex items-center justify-between p-2 fixed z-50">
+        <span class="justify-selt-start text-black-600 text-2xl font-bold max-700:text-xl">EduMin</span>
+    </nav>
+    <section class="w-full h-screen z-40 p-4 flex items-center justify-center">
+        <div class=" p-4 w-2/6 bg-white rounded-lg drop-shadow-lg flex items-center justify-center flex-col gap-4 max-1405:w-50 max-950:w-4/6 max-700:w-5/6 max-585:w-full">
+            <div class="self-start p-2 flex items-center justify-center flex-col gap-4">
+                <h1 class="self-start text-3xl font-bold text-dark max-950:text-xl ">OTP verification</h1>
+                <p class="text-xl text-gray-400 font-semibold text-justify max-950:text-lg max-495:text-base max-395:text-sm">Please enter the OTP sent to your registered email to complete your verification</p>
+            </div>
+            {% for message in messages %}
+              <div class="w-full flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-400" role="alert">
+                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>
+                  <span class="font-medium">Error !</span> {{message}}
+                </div>
+              </div>
+            {% endfor %}
+            <form class="p-2 w-full flex items-center justify-center flex-col" method="post">
+                {% csrf_token %}
+                <div class="flex mb-2 space-x-6 rtl:space-x-reverse max-495:space-x-2">
+                    <div>
+                        <label for="code-1" class="sr-only">First code</label>
+                        <input type="text" name="code-1" maxlength="1" data-focus-input-init data-focus-input-next="code-2" id="code-1" class="block w-12 h-12 py-3 text-base font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary max-495:w-10 max-495:h-10 max-360:w-8 max-360:h-8" required />
+                    </div>
+                    <div>
+                        <label for="code-2" class="sr-only">Second code</label>
+                        <input type="text" name="code-2" maxlength="1" data-focus-input-init data-focus-input-prev="code-1" data-focus-input-next="code-3" id="code-2" class="block w-12 h-12 py-3 text-base font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary max-495:w-10 max-495:h-10 max-360:w-8 max-360:h-8" required />
+                    </div>
+                    <div>
+                        <label for="code-3" class="sr-only">Third code</label>
+                        <input type="text" name="code-3" maxlength="1" data-focus-input-init data-focus-input-prev="code-2" data-focus-input-next="code-4" id="code-3" class="block w-12 h-12 py-3 text-base font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary max-495:w-10 max-495:h-10 max-360:w-8 max-360:h-8" required />
+                    </div>
+                    <div>
+                        <label for="code-4" class="sr-only">Fourth code</label>
+                        <input type="text" name="code-4" maxlength="1" data-focus-input-init data-focus-input-prev="code-3" data-focus-input-next="code-5" id="code-4" class="block w-12 h-12 py-3 text-base font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary max-495:w-10 max-495:h-10 max-360:w-8 max-360:h-8" required />
+                    </div>
+                    <div>
+                        <label for="code-5" class="sr-only">Fifth code</label>
+                        <input type="text" name="code-5" maxlength="1" data-focus-input-init data-focus-input-prev="code-4" data-focus-input-next="code-6" id="code-5" class="block w-12 h-12 py-3 text-base font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary max-495:w-10 max-495:h-10 max-360:w-8 max-360:h-8" required />
+                    </div>
+                    <div>
+                        <label for="code-6" class="sr-only">Sixth code</label>
+                        <input type="text" name="code-6" maxlength="1" data-focus-input-init data-focus-input-prev="code-5" id="code-6" class="block w-12 h-12 py-3 text-base font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary max-495:w-10 max-495:h-10 max-360:w-8 max-360:h-8" required />
+                    </div>
+                </div>
+                <p id="helper-text-explanation" class="mt-2 text-sm text-gray-500 dark:text-gray-400">Please introduce the 6 digit code we sent via email.</p>
+                <div class="mt-4 w-full flex items-center justify-center">
+                    <button type="submit" class="text-white bg-primary hover:bg-tertiary font-medium rounded-lg text-sm w-full sm:w-40 px-5 py-2.5 text-center">Submit</button>
+                </div>
+                <p class="mt-4 text-lg text-gray-600 font-semibold max-395:text-sm">
+                    Did'nt got the code ? 
+                    <a href="{% url 'student:resend-otp' %}" class="text-secondary hover:underline">Resend</a>
+                </p>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

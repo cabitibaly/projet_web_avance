@@ -1,0 +1,141 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&family=Freeman&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'scripts/tailwind.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                clifford: '#da373d',
+                primary: '#ff7e84',
+                secondary: '#30bead',
+                tertiary: '#ffbc1f',
+                redShade: '#8861db',
+                dark: '#0c1327',
+                fourth: '#dcf2ef',
+                fiveth: '#ffebec',
+                sixth: '#ffffff'
+              },
+              flex: {
+                '30': '1 1 30rem',
+
+              },
+              gridTemplateColumns: {
+                'auto-fit': 'repeat(auto-fit, minmax(250px, 1fr))',
+              },
+              screens: {
+                'max-950': {'max': '950px'},
+                'max-700': {'max': '700px'},
+                'max-585': {'max': '585px'},
+                'max-495': {'max': '495px'},
+                'max-395': {'max': '395px'},
+              },
+              spacing: {
+                '10p': '10%',
+              },
+              height: {
+                '30': '30%',
+                '40': '40%',
+                '60': '60%',
+                '70': '70%',
+                '90': '90%',
+                '110': '110vh'
+              },
+              width: {
+                '30': '30%',
+                '40': '40%',
+                '60': '60%',
+                '70': '70%',
+                '90': '90%',
+                '110': '110vh'
+              },
+            }
+          }
+        }
+    </script>
+</head>
+<body class="bg-primary w-full h-screen">
+    <div class="w-full h-full rounded-lg flex items-center justify-center max-700:w-full">
+        <div class="border border-solid boder-gray-800 w-40 h-full max-950:hidden">
+            <img src="{% static 'image/pink-yellow.jpg' %}" class="w-full h-full object-cover" alt="pink-yellow">
+        </div>
+        <div class="py-4 px-8 w-60 h-full bg-gradient-to-r from-fourth to-fiveth flex items-center justify-center flex-col gap-7 max-950:w-full">
+            <span class="text-2xl font-bold">Sign Up To EduMin </span>
+            {% for message in messages %}
+              <div class="w-2/5 flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-400 max-700:w-3/5 max-585:w-full" role="alert">
+                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>
+                  <span class="font-medium">Error !</span> {{message}}
+                </div>
+              </div>
+            {% endfor %}
+            <form class="w-4/6 max-585:w-full" method="post">
+                {% csrf_token %}
+                <div class="relative z-0 w-full mb-5 group">
+                    <input type="email" name="email" id="email" class="block py-2.5 px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " required />
+                    <label for="email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+                </div>
+                <div class="relative z-0 w-full mb-5 group">
+                    <input type="password" name="password1" id="password1" class="block py-2.5 px-0 w-full text-sm text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " required />
+                    <label for="password1" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
+                </div>
+                <div class="relative z-0 w-full mb-5 group">
+                    <input type="password" name="password2" id="password2" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " required />
+                    <label for="password2" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password</label>
+                </div>
+                <div class="grid md:grid-cols-2 md:gap-6">
+                <div class="relative z-0 w-full mb-5 group">
+                    <input type="text" name="firstname" id="firstname" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " required />
+                    <label for="firstname" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First name</label>
+                </div>
+                <div class="relative z-0 w-full mb-5 group">
+                    <input type="text" name="lastname" id="lastname" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " required />
+                    <label for="lastname" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last name</label>
+                </div>
+                </div>
+                <div class="grid md:grid-cols-2 md:gap-6">
+                <div class="relative z-0 w-full mb-5 group">
+                    <input type="tel" name="phonenumber" id="phonenumber" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " required />
+                    <label for="phonenumber" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone number</label>
+                </div>
+                <div class="relative z-0 w-full mb-5 group flex items-center justify-center">
+                  <label for="level" class="sr-only">Underline select</label>
+                  <select id="level" name="level" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" required>
+                      <option value="">Choose your level</option>
+                      <option value="6e">6ème</option>
+                      <option value="5e">5ème</option>
+                      <option value="4e">4ème</option>
+                      <option value="3e">3ème</option>
+                      <option value="2nde">2nde</option>
+                      <option value="1ere">1ère</option>
+                      <option value="Tle">Tle</option>
+                  </select>          
+                  <div class="fa-solid fa-angle-down text-gray-500 absolute right-0"></div>      
+                </div>
+                </div>
+                <div class="w-full flex items-center justify-center">
+                  <button type="submit" class="text-white bg-primary hover:bg-tertiary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-40 px-5 py-2.5 text-center">Submit</button>
+                </div>
+            </form>
+            <p class="text-lg text-gray-500 max-585:text-base max-395:text-sm">
+              Already have an account?
+              <a href="{% url 'student:login' %}" class="underline transition duration-300 ease-in-out hover:font-bold hover:text-dark">Sign in</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

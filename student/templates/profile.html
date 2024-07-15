@@ -1,0 +1,242 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EducMin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&family=Freeman&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'scripts/tailwind.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                clifford: '#da373d',
+                primary: '#ff7e84',
+                secondary: '#30bead',
+                tertiary: '#ffbc1f',
+                redShade: '#8861db',
+                dark: '#0c1327',
+                fourth: '#dcf2ef',
+                fiveth: '#ffebec',
+                sixth: '#ffffff'
+              },
+              flex: {
+                '30': '1 1 30rem'
+              },
+              gridTemplateColumns: {
+                'auto-fit': 'repeat(auto-fit, minmax(250px, 1fr))',
+              },
+              screens: {
+                'max-950': {'max': '950px'},
+                'max-770': {'max': '770px'},
+                'max-700': {'max': '700px'},
+                'max-635': {'max': '635px'},
+                'max-585': {'max': '585px'},
+                'max-495': {'max': '495px'},
+                'max-395': {'max': '395px'},
+                'min-895': '895px'
+              },
+              spacing: {
+                '10p': '10%',
+              },
+              height: {
+                '90': '90%',
+                '110': '110vh'
+              },
+              width: {
+                '90': '90%',
+                '110': '110vh'
+              },
+            }
+          }
+        }
+    </script>
+</head>
+<body>
+    <nav class="fixed z-50 w-full p-2 flex items-center justify-around bg-white max-700:justify-between">
+        <span class="text-black-600 text-2xl font-bold max-700:text-xl">EduMim</span>
+        <ul id="nav" class="flex items-center justify-between gap-8 text-lg text-gray-600 font-semibold max-700:text-base max-585:bg-gray-200 max-585:w-3/4
+         max-585:rounded max-585:p-8 max-585:flex-col max-585:absolute max-585:top-16 max-585:left-10p max-585:hidden">
+         <li>
+          <a class="hover:text-primary hover:font-bold" href="{% url 'student:index' %}">Accueil</a>
+          </li>
+          <li>
+              <a class="hover:text-primary hover:font-bold" href="{% url 'student:matieres' %}">Matières</a>
+          </li>
+          <li>
+              <a class="hover:text-primary hover:font-bold" href="{% url 'student:cours' %}">Cours</a>
+          </li>
+          <li>
+              <a class="font-bold hover:font-bold" href="{% url 'student:exercices' %}">Exercices</a>
+          </li>
+        </ul>
+        <div class="flex items-center justify-center gap-5 max-700:gap-4">
+          <div class="flex items-center gap-4">
+            {% if data.image %}
+              <img id="profile" class="w-12 h-12 p-1 rounded-full ring-2 ring-gray-300 object-cover" src="{{ data.image.url }}" alt="profile">
+            {% else %}
+              <img id="profile" class="w-12 h-12 p-1 rounded-full ring-2 ring-gray-300 object-cover" src="{% static 'img/profile.jpg' %}" alt="profile">
+            {% endif %}
+          </div>
+          <div class="fa-solid fa-bars text-3xl cursor-pointer hidden max-585:block" id="menu-bar"></div>
+          <div id="info" class="hidden w-1/5 p-4 flex items-center justify-center flex-col gap-2 rounded-lg bg-gray-100 absolute top-20 drop-shadow-2xl before:w-5 before:h-5 before:bg-gray-100 before:absolute before:-top-2 before:inset-x-auto before:rotate-45 max-950:before:right-10 max-950:w-1/3 max-950:right-10 max-585:w-1/2 max-585:before:inset-x-auto max-395:w-3/4 max-395:right-1">
+            <a href="{% url 'student:profile' %}" class="w-full p-2 border-b border-solid border-gray-300 rounded-lg text-lg font-semibold transition duration-300 ease-in-out hover:bg-primary hover:text-white">Voir mon profile</a>
+            <a href="{% url 'student:logout' %}" class="w-full p-2 rounded-lg text-lg font-semibold transition duration-300 ease-in-out hover:bg-primary hover:text-white">Deconnexion</a>
+          </div>
+        </div>
+    </nav>
+    
+    <section class="w-full h-screen z-40 py-8 px-32 bg-gradient-to-r from-fourth to-fiveth flex items-center justify-center flex-col gap-4 max-950:px-8 max-770:h-110">
+      <form class="w-4/6 max-585:w-full" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="relative z-0 w-full m-5 group mx-auto">
+          <div class="flex items-center justify-center gap-4">
+            {% if data.image %}
+              <img id="user-img" class="rounded-full w-32 h-32 object-cover max-950:w-20 max-950:h-20 max-395:w-14 max-395:h-14" src="{{ data.image.url }}" alt="image description">
+            {% else %}
+              <img id="user-img" class="rounded-full w-32 h-32 object-cover max-950:w-20 max-950:h-20 max-395:w-14 max-395:h-14" src="{% static 'img/profile.jpg' %}" alt="image description">
+            {% endif %}
+            <div class="flex items-start justify-center gap-2 flex-col">
+              <span class="text-2xl font-bold max-950:text-lg max-395:text-xs">{{ data.last_name|add:" " }} {{ data.first_name }}</span>
+              <label for="image" class="font-semibold border borde-solid border-gray-300 py-2 px-6 rounded-xl transition duration-300 ease-in hover:border-gray-500 cursor-pointer max-950:px-2 max-395:text-xs">Changer</span>
+            </div>  
+          </div>
+          <input type="file" name="img" id="image" class="hidden" accept="image/*">
+          <div class="p-2 mt-2 flex items-center justify-center flex-wrap gap-2 max-495:items-start max-495:justify-start">
+            <div>
+              <span class="text-lg text-dark font-semibold">Niveau: </span>
+              <span class="bg-tertiary text-white text-xl font-bold me-2 px-2.5 py-0.5 rounded max-495:px-1">{{ data.niveau }}</span>
+            </div>
+            <div>
+              <span class="text-lg text-dark font-semibold">Score: </span>
+              <span class="text-secondary text-xl font-bold me-2 rounded max-495:px-1">{{ data.point }} point</span>
+            </div> 
+          </div>
+        </div>
+        <div class="relative z-0 w-full mb-5 group max-395:mb-3">
+            <input type="email" name="email" id="email" value="{{ data.email }}" class="block py-2.5 px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " required />
+            <label for="email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Adresse Email</label>
+        </div>
+        <div class="relative z-0 w-full mb-5 group max-395:mb-3">
+            <input type="password" name="password1" id="password1" class="block py-2.5 px-0 w-full text-sm text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " />
+            <label for="password1" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mot de passe acutel</label>
+        </div>
+        <div class="relative z-0 w-full mb-5 group max-395:mb-3">
+            <input type="password" name="password2" id="password2" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " />
+            <label for="password2" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nouveau mot de passe</label>
+        </div>
+        <div class="grid md:grid-cols-2 md:gap-6">
+        <div class="relative z-0 w-full mb-5 group max-395:mb-3">
+            <input type="text" name="firstname" id="firstname" value="{{ data.first_name }}" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " required />
+            <label for="firstname" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Prénon(s)</label>
+        </div>
+        <div class="relative z-0 w-full mb-5 group max-395:mb-3">
+            <input type="text" name="lastname" id="lastname" value="{{ data.last_name }}" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " required />
+            <label for="lastname" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nom de famille</label>
+        </div>
+        </div>
+        <div class="grid md:grid-cols-2 md:gap-6">
+        <div class="relative z-0 w-full mb-5 group">
+            <input type="tel" name="phonenumber" id="phonenumber" value="{{ data.phonenumber }}" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " required />
+            <label for="phonenumber" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Numéro de téléphone</label>
+        </div>
+        <div class="relative z-0 w-full mb-5 group flex items-center justify-center">
+          <label for="level" class="sr-only">Underline select</label>
+          <select id="level" name="level" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" required>
+              <option value="">Choisir un niveau</option>
+              <option value="6e" {% if data.level == "6e" %} selected {% endif %}>6ème</option>
+              <option value="5e" {% if data.level == "5e" %} selected {% endif %}>5ème</option>
+              <option value="4e" {% if data.level == "4e" %} selected {% endif %}>4ème</option>
+              <option value="3e" {% if data.level == "3e" %} selected {% endif %}>3ème</option>
+              <option value="2nde" {% if data.level == "2nde" %} selected {% endif %}>2nde</option>
+              <option value="1ere" {% if data.level == "1ree" %} selected {% endif %}>1ère</option>
+              <option value="Tle" {% if data.level == "Tle" %} selected {% endif %}>Tle</option>
+          </select>          
+          <div class="fa-solid fa-angle-down text-gray-500 absolute right-0"></div>      
+        </div>
+        </div>
+        <div class="w-full flex items-center justify-center">
+          <button type="submit" class="text-white bg-primary hover:bg-tertiary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-40 px-5 py-2.5 text-center">Submit</button>
+        </div>
+      </form>
+    </section>
+    
+    <footer class="w-full py-16 px-32 bg-dark flex items-center justify-center flex-wrap max-950:px-4">
+      <div class="p-2 w-full grid grid-cols-1 gap-4 justify-between md:grid-cols-3">
+        <div class="p-4 flex items-start justify-center flex-col gap-4">
+          <span class="text-3xl text-white font-bold">EduMin</span>
+          <p class="text-xm text-gray-600 font-medium text-justify max-700:text-lg max-585:text-base max-495:text-sm max-395:text-xs">
+            "L'éducation est l'arme la plus puissante
+            que vous pouvez utilisez pour changer le monde."
+            --Nelson Mandela
+          </p>
+          <div class="p-4 w-3/4 flex items-center justify-between gap-2">
+            <div class="fa-brands fa-facebook-f flex items-center justify-center text-xl text-white w-10 h-10 p-2 bg-gray-700 rounded transition ease-in-out duration-300 hover:bg-primary"></div>
+            <div class="fa-brands fa-instagram flex items-center justify-center text-xl text-white w-10 h-10 p-2 bg-gray-700 rounded transition ease-in-out duration-300 hover:bg-primary"></div>
+            <div class="fa-brands fa-twitter flex items-center justify-center text-xl text-white w-10 h-10 p-2 bg-gray-700 rounded transition ease-in-out duration-300 hover:bg-primary"></div>
+            <div class="fa-brands fa-linkedin-in flex items-center justify-center text-xl text-white w-10 h-10 p-2 bg-gray-700 rounded transition ease-in-out duration-300 hover:bg-primary"></div>
+          </div>
+        </div>
+        <div class="p-4 flex items-start justify-start flex-col gap-4">
+          <span class="text-xl text-white font-bold max-395:text-base">Links</span>
+          <a href="{% url 'student:index' %}" class="text-lg text-gray-600 font-medium transition ease-in-out duration-300 transform hover:translate-x-1 hover:underline hover:text-primary max-395:text-sm">Accueil</a>
+          <a href="{% url 'student:matieres' %}" class="text-lg text-gray-600 font-medium transition ease-in-out duration-300 transform hover:translate-x-1 hover:underline hover:text-primary max-395:text-sm">Matieres</a>
+          <a href="{% url 'student:cours' %}" class="text-lg text-gray-600 font-medium transition ease-in-out duration-300 transform hover:translate-x-1 hover:underline hover:text-primary max-395:text-sm">cours</a>
+          <a href="{% url 'student:exercices' %}" class="text-lg text-gray-600 font-medium transition ease-in-out duration-300 transform hover:translate-x-1 hover:underline hover:text-primary max-395:text-sm">Exercices</a>
+        </div>
+        <div class="p-4 flex items-start justify-start flex-col gap-4">
+          <span class="text-xl text-white font-bold max-395:text-base">Legal</span>
+          <a href="#" class="text-lg text-gray-600 font-medium transition ease-in-out duration-300 transform hover:translate-x-1 hover:underline hover:text-primary max-395:text-sm">Tearm & Condition</a>
+          <a href="#" class="text-lg text-gray-600 font-medium transition ease-in-out duration-300 transform hover:translate-x-1 hover:underline hover:text-primary max-395:text-sm">Payement Method</a>
+          <a href="#" class="text-lg text-gray-600 font-medium transition ease-in-out duration-300 transform hover:translate-x-1 hover:underline hover:text-primary max-395:text-sm">Privacy Policy</a>
+          <a href="#" class="text-lg text-gray-600 font-medium transition ease-in-out duration-300 transform hover:translate-x-1 hover:underline hover:text-primary max-395:text-sm">Licensencing</a>
+        </div>
+      </div>
+      
+    </footer>
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script>
+      const info = document.getElementById('info');
+      const profile = document.getElementById('profile');
+      const img = document.getElementById('image');
+      const userImg = document.getElementById('user-img');
+      const password1 = document.getElementById('password1');
+      const password2 = document.getElementById('password2');
+
+      password1.addEventListener('input', () => {
+        if (this.value !== '') {
+          password2.setAttribute('required', 'required');
+        } else {
+          password2.removeAttribute('required');
+        }
+
+      })
+
+      profile.addEventListener('click', () => {
+        info.classList.toggle('hidden');
+      });
+
+      img.addEventListener('change', (event) => {
+        const input = event.target;
+
+        if(input.files && input.files[0]) {
+          const reader = new FileReader();
+
+          reader.onload = (e) => {
+            userImg.src = e.target.result;
+          }
+
+          reader.readAsDataURL(input.files[0])
+        }
+      })
+
+    </script>
+</body>
+</html>
